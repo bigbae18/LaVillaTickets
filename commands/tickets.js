@@ -26,7 +26,7 @@ export default class TicketCommand extends Command {
             fields: [
                 {
                     name: '🛡️ Sistema de Reporte 🛡️',
-                    value: 'Para abrir un ticket y recibir ayuda, reacciona a alguna de las siguientes reacciones de acuerdo al tipo de soporte que necesites.\nSi necesitas ayuda sobre el formato antes de abrir el ticket, porfavor ves a <#818976053505556480>\n\n\u200b'
+                    value: 'Para abrir un ticket y recibir ayuda, reacciona a alguna de las siguientes reacciones de acuerdo al tipo de soporte que necesites.\nSi necesitas más ayuda, asegúrate de haber leído las normativas:\n\n- <#833080342448701524>\n- <#833080342448701525>\n\n\u200b'
                 },
                 {
                     name: '📝 Apelación de Sanciones 📝',
@@ -43,10 +43,18 @@ export default class TicketCommand extends Command {
                 {
                     name: '🗡️ CK 🗡️',
                     value: 'Reacciona al emoji "🗡️" si quieres realizar un CK, a alguien más o a ti mismo.\n\n\u200b'
+                },
+                {
+                    name: '🏪 Negocios 🏪',
+                    value: 'Reacciona al emoji "🏪" si quieres pedir información o empezar un negocio.\n\n\u200b'
+                },
+                {
+                    name: '⚜️ Bandas/Mafias ⚜️',
+                    value: 'Reacciona al emoji "⚜️" si quieres pedir entrar o empezar una banda/mafia, o información sobre las que hay disponibles.\n\n\u200b'
                 }
             ],
             footer: {
-                text: "Asaltados RP",
+                text: "ElCiclo RP",
                 iconURL: this.client.user.avatarURL()
             }
         }
@@ -58,6 +66,8 @@ export default class TicketCommand extends Command {
             m.react('📫');
             m.react('🚧');
             m.react('🗡️');
+            m.react('🏪');
+            m.react('⚜️');
 
             const ticketData = {
                 "channelId": channel.id,

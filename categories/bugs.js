@@ -27,7 +27,7 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
                     }],
                     timestamp: new Date(),
                     footer: {
-                        text: 'Asaltados RP',
+                        text: 'ElCiclo RP',
                         iconURL: client.user.avatarURL()
                     }
                 }
@@ -37,11 +37,15 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
         let channel;
         let ticketUser = user;
 
-        await reaction.message.guild.channels.create(`Bugs-${user.username}`, {
+        await reaction.message.guild.channels.create(`Bugs-${ticketUser.username}`, {
             type: 'text',
             parent: serverInfo.testGuild.ticketParents.bugs,
             permissionOverwrites: [{
                     id: user.id,
+                    allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "ADD_REACTIONS"]
+                },
+                {
+                    id: serverInfo.testGuild.roles.god,
                     allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "ADD_REACTIONS"]
                 },
                 // {
@@ -105,7 +109,7 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
             fields: [
                 {
                     name: '🚧 Bugs y Fallos 🚧',
-                    value: '¡Bienvenido al sistema de tickets de Asaltados!\n\n```Para ser atendido, por favor lee la siguiente instrucciones.```\n:one: **Comparte toda la información sobre tu problema**, para darle seguimiento más rápido. Incluye tu propio nick dentro de los detalles.\n\n:two: **Añade alguna imagen** o algún tipo de prueba para orientar al equipo administrativo.\n\n:three: **Sé respetuoso **y** haz un buen uso del sistema.**'
+                    value: '¡Bienvenido al sistema de tickets de ElCiclo RP!\n\n```Para ser atendido, por favor lee la siguiente instrucciones.```\n:one: **Comparte toda la información sobre tu problema**, para darle seguimiento más rápido. Incluye tu propio nick dentro de los detalles.\n\n:two: **Añade alguna imagen** o algún tipo de prueba para orientar al equipo administrativo.\n\n:three: **Sé respetuoso **y** haz un buen uso del sistema.**'
                 },
                 {
                     name: '\u200b',
@@ -116,13 +120,13 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
                 url: user.avatarURL()
             },
             footer: {
-                text: "Asaltados RP",
+                text: "ElCiclo RP",
                 iconURL: client.user.avatarURL()
             },
             timestamp: new Date()
         }
         await client.channels.fetch(serverInfo.testGuild.ticketChannels.ticketLogs).then(ch => {
-            ch.send(`<@&${serverInfo.testGuild.roles.putoamo}>`, {
+            ch.send(`<@&${serverInfo.testGuild.roles.god}>`, {
                 embed: aauLogEmbed
             }).catch(e => console.log(`<> ${chalk.red.bold.underline('Error')}: ${e}`))
         }).catch(e => console.log(`<> ${chalk.red.bold.underline('Error')}: ${e}`));
@@ -170,7 +174,7 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
                                 }
                             })
                         })
-                        await m.channel.setName(`closed-${user.username}`)
+                        await m.channel.setName(`closed-${ticketUser.username}`)
                         await m.channel.send({
                             embed: {
                                 title: `🔒 Ticket cerrado 🔒`,
@@ -805,7 +809,7 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
                                             },
                                             timestamp: new Date()
                                         }
-                                        const finalLog = new Discord.MessageAttachment('./utils/index.html', `ticket-${user.username}.html`);
+                                        const finalLog = new Discord.MessageAttachment('./utils/index.html', `ticket-${ticketUser.username}.html`);
                                         await client.channels.fetch(serverInfo.testGuild.ticketChannels.ticketsHtml).then(async ch => {
                                             setTimeout(() => {
                                                 ch.send({
@@ -816,11 +820,11 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
                                                         ticketUser.send({
                                                             embed: {
                                                                 footer: {
-                                                                    text: "Asaltados RP",
+                                                                    text: "ElCiclo RP",
                                                                     iconURL: client.user.avatarURL()
                                                                 },
                                                                 color: colores.green,
-                                                                description: '**Tu ticket ha sido cerrado.** Este archivo HTML es una copia certificada de la conversación de tu ticket. **Descárgalo** si deseas leer la transcripción completa\n\n**Si necesitas más ayuda**, no dudes en contactarnos a través de nuestro [Discord Oficial](https://discord.gg/XAVzJpw). **Muchas gracias.**\n\n*Este es un mensaje automatizado y no necesitas responderlo*'
+                                                                description: '**Tu ticket ha sido cerrado.** Este archivo HTML es una copia certificada de la conversación de tu ticket. **Descárgalo** si deseas leer la transcripción completa\n\n**Si necesitas más ayuda**, no dudes en contactarnos a través de nuestro [Discord Oficial](https://discord.gg/q4USsrvesK). **Muchas gracias.**\n\n*Este es un mensaje automatizado y no necesitas responderlo*'
                                                             },
                                                             files: [finalLog]
                                                         })
@@ -882,11 +886,11 @@ export const BUGS = async (client, serverInfo, colores, reaction, user) => {
                                                     ticketUser.send({
                                                         embed: {
                                                             footer: {
-                                                                text: "Asaltados RP",
+                                                                text: "ElCiclo RP",
                                                                 iconURL: client.user.avatarURL()
                                                             },
                                                             color: colores.red,
-                                                            description: '**Tu ticket ha sido cerrado.** No se ha guardado copia de la conversación.\n\n**Si necesitas más ayuda**, no dudes en contactarnos a través de nuestro [Discord Oficial](https://discord.gg/C3EY57mv8U). **Muchas gracias.**\n\n*Este es un mensaje automatizado y no necesitas responderlo*'
+                                                            description: '**Tu ticket ha sido cerrado.** No se ha guardado copia de la conversación.\n\n**Si necesitas más ayuda**, no dudes en contactarnos a través de nuestro [Discord Oficial](https://discord.gg/q4USsrvesK). **Muchas gracias.**\n\n*Este es un mensaje automatizado y no necesitas responderlo*'
                                                         }
                                                     })
                                                     reaction.message.channel.delete('Ticket cerrado.')

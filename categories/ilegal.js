@@ -1,4 +1,4 @@
-import { ticketSanciones } from '../index';
+import { ticketIlegal } from '../index';
 
 const fs = require('fs').promises;
 const chalk = require('chalk');
@@ -11,15 +11,15 @@ const {
 const dom = new JSDOM();
 const document = dom.window.document;
 
-export const SANCIONES = async (client, serverInfo, colores, reaction, user) => {
+export const ILEGAL = async (client, serverInfo, colores, reaction, user) => {
     try {
 
         await reaction.users.remove(user)
 
-        if (ticketSanciones.has(user.id) || reaction.message.guild.channels.cache.find(ch => ticketSanciones.has(ch.id))) {
+        if (ticketIlegal.has(user.id) || reaction.message.guild.channels.cache.find(ch => ticketIlegal.has(ch.id))) {
             return user.send({
                 embed: {
-                    title: '📝 Error al Abrir un Ticket 📝',
+                    title: '⚜️ Error al Abrir un Ticket ⚜️',
                     color: colores.red,
                     fields: [{
                         name: 'Parece que tienes un ticket para esta categoría pendiente.',
@@ -37,9 +37,9 @@ export const SANCIONES = async (client, serverInfo, colores, reaction, user) => 
         let channel;
         let ticketUser = user;
 
-        await reaction.message.guild.channels.create(`Sanciones-${user.username}`, {
+        await reaction.message.guild.channels.create(`BANDA-MAFIA-${user.username}`, {
             type: 'text',
-            parent: serverInfo.testGuild.ticketParents.sanciones,
+            parent: serverInfo.testGuild.ticketParents.ilegal,
             permissionOverwrites: [{
                     id: user.id,
                     allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "ADD_REACTIONS"]
@@ -74,12 +74,12 @@ export const SANCIONES = async (client, serverInfo, colores, reaction, user) => 
                 }
             ]
         }).then(ch => {
-            ticketSanciones.set(user.id, ch.id);
+            ticketIlegal.set(user.id, ch.id);
             channel = ch;
         }).catch(e => console.log(`<> ${chalk.red.bold.underline('Error')}: ${e}`))        
 
         const aauLogEmbed = {
-            title: "️️️️️️️📝 Reclamación de Sanciones 📝",
+            title: "️️️️️️️⚜️ Banda/Mafia ⚜️",
             description: 'Han abierto un nuevo ticket.',
             color: colores.green,
             fields: [
@@ -104,7 +104,7 @@ export const SANCIONES = async (client, serverInfo, colores, reaction, user) => 
             color: colores.caoba,
             fields: [
                 {
-                    name: '📝 Reclamación de Sanciones 📝',
+                    name: '⚜️ Banda/Mafia ⚜️',
                     value: '¡Bienvenido al sistema de tickets de ElCiclo RP!\n\n```Para ser atendido, por favor lee la siguiente instrucciones.```\n:one: **Comparte toda la información sobre tu problema**, para darle seguimiento más rápido. Incluye tu propio nick dentro de los detalles.\n\n:two: **Añade alguna imagen** o algún tipo de prueba para orientar al equipo administrativo.\n\n:three: **Sé respetuoso **y** haz un buen uso del sistema.**'
                 },
                 {
@@ -140,14 +140,14 @@ export const SANCIONES = async (client, serverInfo, colores, reaction, user) => 
 
                 collector.on('collect', async (reaction, user) => {
                         await reaction.users.remove(user);
-                        ticketSanciones.delete(ticketUser.id);
+                        ticketIlegal.delete(ticketUser.id);
                         await m.channel.updateOverwrite(ticketUser.id, {
                             deny: ["VIEW_CHANNEL"]
                         });
                         await client.channels.fetch(serverInfo.testGuild.ticketChannels.ticketLogs).then(async ch => {
                             ch.send({
                                 embed: {
-                                    title: "️️️️️️️📝 Reclamación de Sanciones 📝",
+                                    title: "️️️️️️️⚜️ Banda/Mafia ⚜️",
                                     description: 'Han cerrado un ticket.',
                                     color: colores.red,
                                     fields: [
@@ -774,7 +774,7 @@ export const SANCIONES = async (client, serverInfo, colores, reaction, user) => 
                                                 },
                                                 {
                                                     name: 'Categoría:',
-                                                    value: '📝 Reclamación de Sanciones 📝',
+                                                    value: '⚜️ Banda/Mafia ⚜️',
                                                     inline: true
                                                 },
                                                 {
@@ -864,7 +864,7 @@ export const SANCIONES = async (client, serverInfo, colores, reaction, user) => 
                                                 },
                                                 {
                                                     name: 'Categoría:',
-                                                    value: '📝 Reclamación de Sanciones 📝'
+                                                    value: '⚜️ Banda/Mafia ⚜️'
                                                 }
                                             ],
                                             footer: {

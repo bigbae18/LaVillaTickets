@@ -7,6 +7,8 @@ import { SANCIONES } from './categories/sanciones';
 import { SOPORTE } from './categories/soporte';
 import { BUGS } from './categories/bugs';
 import { CK } from './categories/ck';
+import { NEGOCIOS } from './categories/negocios';
+import { ILEGAL } from './categories/ilegal';
 
 const serverInfo = require('./serverInfo.json');
 const tickets = require('./tickets.json');
@@ -44,11 +46,12 @@ const run = async () => {
         client.start();
 
         await client.guilds.fetch(serverInfo.testGuild.id);
-        await client.guilds.fetch(serverInfo.prodGuild.id);
 
         if (tickets.channelId) {
             await client.channels.cache.get(tickets.channelId).messages.fetch(m => m.id === tickets.messageId);
         }
+        
+        await client.channels.fetch(ch => ch.type === "category" && ch.id === serverInfo.testGuild.ticketParents.bugs || serverInfo.testGuild.ticketParents.ck || serverInfo.testGuild.ticketParents.ilegal || serverInfo.testGuild.ticketParents.sanciones || serverInfo.testGuild.ticketParents.soporte || serverInfo.testGuild.ticketParents.negocios)
 
         await client.user.setStatus('idle');
         await client.user.setActivity('🖥️ connect 54.37.129.111:30150 || Asaltados Soporte');
@@ -67,6 +70,10 @@ client.once('ready', async () => {
 
 client.on('messageReactionAdd', (reaction, user) => {
 
+    // CHECK PARENT ID (CATEGORY)
+    //
+    // message.channel.parent.id === 'CATEGORY ID'
+
     if (reaction.message.id !== tickets.messageId || reaction.message.channel.id !== tickets.channelId) {
         return null
     }
@@ -83,6 +90,12 @@ client.on('messageReactionAdd', (reaction, user) => {
     if (reaction.emoji.name === "🗡️" && reaction.message.id === tickets.messageId && user.id !== client.user.id) {
         CK(client, serverInfo, colores, reaction, user);
     }
+    if (reaction.emoji.name === "🏪" && reaction.message.id === tickets.messageId && user.id !== client.user.id) {
+        NEGOCIOS(client, serverInfo, colores, reaction, user);
+    }
+    if (reaction.emoji.name === "🗡️" && reaction.message.id === tickets.messageId && user.id !== client.user.id) {
+        ILEGAL(client, serverInfo, colores, reaction, user);
+    }
 
 })
 
@@ -96,3 +109,5 @@ export const ticketSanciones = new Collection();
 export const ticketSoporte = new Collection();
 export const ticketBugs = new Collection();
 export const ticketKills = new Collection();
+export const ticketNegocios = new Collection();
+export const ticketIlegal = new Collection();
