@@ -26,7 +26,7 @@ export default class TicketCommand extends Command {
             fields: [
                 {
                     name: '🛡️ Sistema de Reporte 🛡️',
-                    value: 'Para abrir un ticket y recibir ayuda, reacciona a alguna de las siguientes reacciones de acuerdo al tipo de soporte que necesites.\nSi necesitas más ayuda, asegúrate de haber leído las normativas:\n\n- <#833080342448701524>\n- <#833080342448701525>\n\n\u200b'
+                    value: 'Para abrir un ticket y recibir ayuda, reacciona a alguna de las siguientes reacciones de acuerdo al tipo de soporte que necesites.\nSi necesitas más ayuda, asegúrate de haber leído las normativas:\n\n- <#842030350440071215>\n- <#842030350258929670>\n- <#842030350645067798>\n- <#842030350645067799>\n- <#842030350645067800>\n\n\u200b'
                 },
                 {
                     name: '📝 Apelación de Sanciones 📝',
